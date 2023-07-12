@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .box {
+            height: 100px;
+            width: 100px;
+            background-color: #FF8C00;
+            border-radius: 4px;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Caprasimo', cursive;
+            color: #FFFAF0;
+            box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);         
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    </div>
+    <script>
+        const container = document.querySelector('.container')
+        for (let i = 0; i < 100; i++) {
+            const box = document.createElement('div')
+            box.classList.add('box')
+            box.innerHTML = 'div ' + (i + 1)
+            container.appendChild(box)
+        }
+        
+    const { children } = container
+    let prevClickedIndex = null;
+
+    for (let i = 0; i < children.length; i++) {
+        const currentBox = children[i];
+        const currentIndex =  i;
+        
+        const handleClick = () => {
+            if (currentIndex === 0 && prevClickedIndex === null) {
+                return;
+            }
+
+            if(currentIndex === 0 && typeof prevClickedIndex === 'number') {
+                const prevEl = children[prevClickedIndex]
+                const currentEl = children[currentIndex]
+                
+                const currentText = currentEl.textContent;
+                const prevText = prevEl.textContent;
+
+                prevEl.textContent = currentText;
+                currentEl.textContent = prevText;
+
+                prevClickedIndex = null;
+
+            } else {                
+                const currentEl = children[currentIndex]
+                const firstEl = children[0]
+                
+                const currentText = currentEl.textContent;
+                const firstText = firstEl.textContent;
+                
+                
+                currentEl.textContent = firstText;
+                firstEl.textContent = currentText;
+                
+                if (currentIndex) {
+                    prevClickedIndex = currentIndex;
+                }
+            }
+        }
+    currentBox.addEventListener('click', handleClick)
+    }
+    </script>
+</body>
+</html>
